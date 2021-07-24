@@ -1,0 +1,14 @@
+spring:
+  main:
+    banner-mode: off
+  datasource:
+    url: jdbc:mariadb://localhost:3306/wasser
+    username: wasser
+    password: wasser
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+  liquibase:
+    enabled: false
+
