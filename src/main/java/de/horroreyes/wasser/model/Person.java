@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Set;
 
 @Entity
 @Data
@@ -17,5 +18,4 @@ public class Person {
     private String firstname;
     @NonNull
     private String lastname;
-
 }
