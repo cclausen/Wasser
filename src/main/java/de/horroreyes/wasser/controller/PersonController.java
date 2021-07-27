@@ -16,12 +16,12 @@ public class PersonController {
     }
 
     @GetMapping
-    List<Person> all() {
+    public List<Person> all() {
         return personRepository.findAll();
     }
 
     @PostMapping()
-    Person newPerson(@RequestBody Person newPerson) {
+    public Person newPerson(@RequestBody Person newPerson) {
         return personRepository.save(newPerson);
     }
 
