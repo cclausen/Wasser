@@ -1,0 +1,51 @@
+spring:
+  main:
+    banner-mode: off
+  datasource:
+    url: jdbc:mariadb://localhost:3306/wasser
+    username: wasser
+    password: wasser
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  liquibase:
+    enabled: false
+  devtools:
+    add-properties: true
+server:
+  port: 8081
+management:
+  endpoint:
+    logfile:
+      enabled: true
+    info:
+      enabled: true
+    liquibase:
+      enabled: true
+    metrics:
+      enabled: true
+    quartz:
+      enabled: true
+    scheduledtasks:
+      enabled: true
+    startup:
+      enabled: true
+    health:
+      enabled: true
+  endpoints:
+    enabled-by-default: false
+    jmx:
+      exposure:
+        include: "*"
+    web:
+      exposure:
+        include: "*"
+      discovery:
+        enabled: true
+  health:
+    db:
+      enabled: true
+    defaults:
+      enabled: true
