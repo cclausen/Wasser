@@ -9,6 +9,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    open-in-view: false
   liquibase:
     enabled: false
-
+server:
+  port: 8081

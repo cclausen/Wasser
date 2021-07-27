@@ -1,6 +1,7 @@
 package de.horroreyes.wasser.config;
 
 import de.horroreyes.wasser.model.Person;
+import de.horroreyes.wasser.model.Status;
 import de.horroreyes.wasser.repositories.PersonRepository;
 import lombok.extern.java.Log;
 import org.springframework.boot.CommandLineRunner;
@@ -15,8 +16,8 @@ class Database {
     CommandLineRunner initDatabase(PersonRepository personRepository) {
 
         return args -> {
-            log.info("Preloading " + personRepository.save(new Person("Bilbo", "Baggins")));
-            log.info("Preloading " + personRepository.save(new Person("Frodo", "Baggins")));
+            log.info("Preloading " + personRepository.save(new Person("Bilbo", "Baggins", Status.ACTIVE)));
+            log.info("Preloading " + personRepository.save(new Person("Frodo", "Baggins", Status.ACTIVE)));
         };
     }
 }

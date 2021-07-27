@@ -21,9 +21,8 @@ public class PersonController {
     }
 
     @PostMapping()
-    Person newEmployee(@RequestBody Person newPerson) {
+    Person newPerson(@RequestBody Person newPerson) {
         return personRepository.save(newPerson);
     }
-
 
 }
