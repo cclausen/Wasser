@@ -4,9 +4,11 @@ import de.horroreyes.wasser.model.Person;
 import de.horroreyes.wasser.repositories.PersonRepository;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
+@Transactional
 @RequestMapping("persons")
 public class PersonController {
     private final PersonRepository personRepository;

@@ -25,7 +25,7 @@ class Database {
             }
             if (personRepository.count() == 0) {
                 log.info(PRELOADING + personRepository.save(new Person("Bilbo", "Baggins", Status.ACTIVE)));
-                log.info(PRELOADING + personRepository.save(new Person("Frodo", "Baggins", Status.ACTIVE)));
+                log.info(PRELOADING + personRepository.save(new Person("Frodo", "Baggins", Status.ILL)));
             }
         };
     }
