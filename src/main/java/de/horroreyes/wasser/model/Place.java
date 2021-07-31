@@ -1,16 +1,18 @@
 package de.horroreyes.wasser.model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 @RequiredArgsConstructor
 @NoArgsConstructor
 public class Place {
@@ -18,6 +20,20 @@ public class Place {
     @GeneratedValue
     private Long id;
     @NonNull
+    @Column(unique = true)
     private String name;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Place place = (Place) o;
+
+        return Objects.equals(id, place.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 1945780767;
+    }
 }

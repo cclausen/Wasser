@@ -3,11 +3,11 @@ package de.horroreyes.wasser.model;
 import lombok.*;
 import org.hibernate.Hibernate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import java.time.LocalDateTime;
+import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
 @Getter
@@ -16,31 +16,31 @@ import java.util.Objects;
 @Entity
 @RequiredArgsConstructor
 @NoArgsConstructor
-public class Presence {
+public class User {
     @Id
-    @GeneratedValue
-    private Long id;
-    @ManyToOne
+    @GeneratedValue()
+    private long id;
+
     @NonNull
-    private Person person;
-    @ManyToOne
+    @NotEmpty(message = "username is required")
+    @Column(unique = true)
+    private String username;
+
     @NonNull
-    private Place place;
-    @NonNull
-    private LocalDateTime start;
-    private LocalDateTime end;
+    @NotEmpty(message = "password is required")
+    private String password;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Presence presence = (Presence) o;
+        User user = (User) o;
 
-        return Objects.equals(id, presence.id);
+        return Objects.equals(id, user.id);
     }
 
     @Override
     public int hashCode() {
-        return 560112052;
+        return 562048007;
     }
 }
