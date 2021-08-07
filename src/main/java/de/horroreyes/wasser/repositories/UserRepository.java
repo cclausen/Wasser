@@ -1,8 +1,13 @@
 package de.horroreyes.wasser.repositories;
 
-import de.horroreyes.wasser.model.User;
+import java.util.Optional;
+
 import org.springframework.data.repository.CrudRepository;
 
+import de.horroreyes.wasser.model.User;
+
 public interface UserRepository extends CrudRepository<User, Long> {
-    User findByUsername(String username);
+    Optional<User> findByUsername(String username);
+
+    Optional<User> findByEmail(String email);
 }

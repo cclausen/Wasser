@@ -1,16 +1,23 @@
 package de.horroreyes.wasser.controller;
 
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import de.horroreyes.wasser.model.Presence;
 import de.horroreyes.wasser.repositories.PresenceRepository;
 import de.horroreyes.wasser.service.PresenceService;
-import org.springframework.web.bind.annotation.*;
-
-import javax.transaction.Transactional;
-import java.util.List;
 
 @RestController
 @Transactional
-@RequestMapping("presences")
+@RequestMapping("api/presences")
 public class PresenceController {
     private final PresenceRepository presenceRepository;
     private final PresenceService presenceService;

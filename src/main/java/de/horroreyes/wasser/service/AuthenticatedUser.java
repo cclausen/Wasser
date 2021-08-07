@@ -1,15 +1,16 @@
 package de.horroreyes.wasser.service;
 
-import de.horroreyes.wasser.model.User;
+import java.util.Collection;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
+import de.horroreyes.wasser.model.User;
 
 public class AuthenticatedUser extends User implements UserDetails {
     protected AuthenticatedUser(User user) {
-        super(user.getUsername(), user.getPassword());
+        super(user.getUsername(), user.getEmail(), user.getPassword());
     }
 
     @Override
