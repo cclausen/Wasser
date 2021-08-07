@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,11 +25,13 @@ public class PersonController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('USER')")
     public List<Person> all() {
         return personRepository.findAll();
     }
 
     @PostMapping()
+    @PreAuthorize("hasRole('ADMIN')")
     public Person newPerson(@RequestBody Person newPerson) {
         return personRepository.save(newPerson);
     }

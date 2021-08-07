@@ -3,3 +3,8 @@ spring:
     add-properties: true
   mvc:
     log-request-details: true
+
+    # App Properties
+wasser:
+  jwtExpirationMs: 86400000
+  jwtSecret: bezKoderSecretKey
