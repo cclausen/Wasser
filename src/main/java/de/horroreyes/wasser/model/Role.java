@@ -14,12 +14,14 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Getter
 @Setter
+@ToString
 @Table
 public class Role {
     @Id
