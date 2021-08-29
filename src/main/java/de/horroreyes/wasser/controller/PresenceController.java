@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.horroreyes.wasser.model.Presence;
 import de.horroreyes.wasser.repositories.PresenceRepository;
-import de.horroreyes.wasser.service.PresenceService;
+import de.horroreyes.wasser.services.PresenceService;
 
 @RestController
 @RequestMapping("api/presences")

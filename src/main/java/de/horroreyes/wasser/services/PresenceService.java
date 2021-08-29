@@ -1,4 +1,9 @@
-package de.horroreyes.wasser.service;
+package de.horroreyes.wasser.services;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
 
 import de.horroreyes.wasser.exceptions.MoreThanOneOpenPresenceException;
 import de.horroreyes.wasser.exceptions.NoOpenPresenceException;
@@ -8,10 +13,6 @@ import de.horroreyes.wasser.model.Presence;
 import de.horroreyes.wasser.repositories.PersonRepository;
 import de.horroreyes.wasser.repositories.PlaceRepository;
 import de.horroreyes.wasser.repositories.PresenceRepository;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 public class PresenceService {
@@ -19,7 +20,8 @@ public class PresenceService {
     private final PlaceRepository placeRepository;
     private final PersonRepository personRepository;
 
-    public PresenceService(PresenceRepository presenceRepository, PlaceRepository placeRepository, PersonRepository personRepository) {
+    public PresenceService(PresenceRepository presenceRepository, PlaceRepository placeRepository,
+            PersonRepository personRepository) {
         this.presenceRepository = presenceRepository;
         this.placeRepository = placeRepository;
         this.personRepository = personRepository;

@@ -12,28 +12,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.horroreyes.wasser.model.Person;
-import de.horroreyes.wasser.repositories.PersonRepository;
+import de.horroreyes.wasser.services.PersonService;
 
 @RestController
 @Transactional
 @RequestMapping("api/persons")
 public class PersonController {
-    private final PersonRepository personRepository;
+    private final PersonService personService;
 
-    public PersonController(PersonRepository personRepository) {
-        this.personRepository = personRepository;
+    public PersonController(PersonService personService) {
+        this.personService = personService;
     }
 
     @GetMapping
     @PreAuthorize("hasRole('USER')")
     public List<Person> all() {
-        return personRepository.findAll();
+        return personService.getAll();
     }
 
     @PostMapping()
     @PreAuthorize("hasRole('ADMIN')")
     public Person newPerson(@RequestBody Person newPerson) {
-        return personRepository.save(newPerson);
+        return personService.save(newPerson);
     }
 
 }
