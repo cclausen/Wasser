@@ -7,4 +7,4 @@ before_install:
   - chmod +x mvnw
 script:
   - ./mvnw clean install
-  - ./mvnw deploy jib:build -P deploy-docker8
+  - ./mvnw deploy jib:build -P deploy-docker
