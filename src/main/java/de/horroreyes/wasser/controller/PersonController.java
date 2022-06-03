@@ -1,19 +1,12 @@
 package de.horroreyes.wasser.controller;
 
-import java.util.List;
-
-import javax.transaction.Transactional;
-
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import de.horroreyes.wasser.model.Person;
 import de.horroreyes.wasser.services.PersonService;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import javax.transaction.Transactional;
+import java.util.List;
 
 @RestController
 @Transactional
@@ -26,13 +19,13 @@ public class PersonController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('USER')")
+//    @PreAuthorize("hasRole('USER')")
     public List<Person> all() {
         return personService.getAll();
     }
 
     @PostMapping()
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     public Person newPerson(@Validated @RequestBody Person newPerson) {
         return personService.save(newPerson);
     }
