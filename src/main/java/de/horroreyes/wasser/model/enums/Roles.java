@@ -1,4 +1,4 @@
-package de.horroreyes.wasser.model;
+package de.horroreyes.wasser.model.enums;
 
 public enum Roles {
     ROLE_USER,

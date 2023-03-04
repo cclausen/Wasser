@@ -16,16 +16,18 @@ public class PersonService {
     }
 
     public List<Person> getAll() {
-        List<Person> persons = personRepository.findAll();
-        persons.forEach(this::setPresence);
-        return persons;
-    }
-
-    private void setPresence(Person p) {
-        p.setPresence(true);
+        return personRepository.findAll();
     }
 
     public Person save(Person newPerson) {
         return personRepository.save(newPerson);
+    }
+
+    public Person get(long personId) {
+        return personRepository.getReferenceById(personId);
+    }
+
+    public void delete(long personId) {
+        personRepository.deleteById(personId);
     }
 }

@@ -3,7 +3,7 @@ version: "3"
 services:
   mariadb:
     image: "mariadb:latest"
-    restart: 'always'
+    restart: 'unless-stopped'
     ports:
       - "3306:3306"
     environment:
@@ -11,3 +11,14 @@ services:
       MYSQL_DATABASE: "wasser"
       MYSQL_USER: "wasser"
       MYSQL_PASSWORD: "wasser"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    restart: 'unless-stopped'
+    ports:
+      - "8082:80"
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mariadb
+    depends_on:
+      - mariadb

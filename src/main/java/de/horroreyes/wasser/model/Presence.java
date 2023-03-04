@@ -1,14 +1,20 @@
 package de.horroreyes.wasser.model;
 
-import lombok.*;
-import org.hibernate.Hibernate;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 import java.util.Objects;
+
+import org.hibernate.Hibernate;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -23,9 +29,6 @@ public class Presence {
     @ManyToOne
     @NonNull
     private Person person;
-    @ManyToOne
-    @NonNull
-    private Place place;
     @NonNull
     private LocalDateTime start;
     private LocalDateTime end;

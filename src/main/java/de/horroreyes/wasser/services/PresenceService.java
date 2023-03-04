@@ -21,23 +21,22 @@ public class PresenceService {
     private final PersonRepository personRepository;
 
     public PresenceService(PresenceRepository presenceRepository, PlaceRepository placeRepository,
-            PersonRepository personRepository) {
+                           PersonRepository personRepository) {
         this.presenceRepository = presenceRepository;
         this.placeRepository = placeRepository;
         this.personRepository = personRepository;
     }
 
-    public void startPresence(long personId, long placeId) {
-        Place place = placeRepository.getById(placeId);
-        Person person = personRepository.getById(personId);
-        List<Presence> unstoppedPresences = presenceRepository.findByPersonAndPlaceAndEnd(person, place, null);
+    public void startPresence(long personId) {
+        Person person = personRepository.getReferenceById(personId);
+        List<Presence> unstoppedPresences = presenceRepository.findByPersonAndEnd(person, null);
         if (unstoppedPresences.isEmpty()) {
-            presenceRepository.save(new Presence(person, place, LocalDateTime.now()));
+            presenceRepository.save(new Presence(person, LocalDateTime.now()));
         }
     }
 
     public void stopPresence(long presenceId) {
-        Presence presence = presenceRepository.getById(presenceId);
+        Presence presence = presenceRepository.getReferenceById(presenceId);
         presence.setEnd(LocalDateTime.now());
         presenceRepository.save(presence);
     }
@@ -49,9 +48,9 @@ public class PresenceService {
     }
 
     public Presence getOpenPresence(long personId, long placeId) {
-        Place place = placeRepository.getById(placeId);
-        Person person = personRepository.getById(personId);
-        List<Presence> unstoppedPresences = presenceRepository.findByPersonAndPlaceAndEnd(person, place, null);
+        Place place = placeRepository.getReferenceById(placeId);
+        Person person = personRepository.getReferenceById(personId);
+        List<Presence> unstoppedPresences = presenceRepository.findByPersonAndEnd(person, null);
         if (unstoppedPresences.isEmpty()) {
             throw new NoOpenPresenceException("Cannot identify correct presence to stop");
         }

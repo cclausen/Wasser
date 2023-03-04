@@ -1,15 +1,17 @@
 package de.horroreyes.wasser.model;
 
+import java.time.LocalDate;
 import java.util.Objects;
-
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 import org.hibernate.Hibernate;
 
+import de.horroreyes.wasser.model.enums.Lifeguard;
+import de.horroreyes.wasser.model.enums.Status;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -34,14 +36,19 @@ public class Person {
     @NonNull
     @Enumerated(EnumType.STRING)
     private Status status;
-    private volatile boolean presence;
+    @Enumerated(EnumType.STRING)
+    private Lifeguard lifeguard;
+    private LocalDate lifeguardFrom;
+    private LocalDate fitness;
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o))
+        }
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
             return false;
+        }
         Person person = (Person) o;
 
         return Objects.equals(id, person.id);

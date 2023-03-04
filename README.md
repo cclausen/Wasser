@@ -5,7 +5,7 @@
 
 # WASSER
 
-WachStrukturSoftware
+WAchStrukturSoftware für Einsatz- und Ressourcenplanung
 
 ## Wichtige Links
 

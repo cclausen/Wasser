@@ -1,12 +1,19 @@
 package de.horroreyes.wasser.controller;
 
+import java.util.List;
+
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import de.horroreyes.wasser.model.Person;
 import de.horroreyes.wasser.services.PersonService;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
-import javax.transaction.Transactional;
-import java.util.List;
+import jakarta.transaction.Transactional;
 
 @RestController
 @Transactional
@@ -18,16 +25,23 @@ public class PersonController {
         this.personService = personService;
     }
 
-    @GetMapping
-//    @PreAuthorize("hasRole('USER')")
-    public List<Person> all() {
+    @GetMapping("/")
+    public List<Person> indexPersons() {
         return personService.getAll();
     }
 
-    @PostMapping()
-//    @PreAuthorize("hasRole('ADMIN')")
-    public Person newPerson(@Validated @RequestBody Person newPerson) {
+    @PostMapping
+    public Person create(@Validated @RequestBody Person newPerson) {
         return personService.save(newPerson);
     }
 
+    @GetMapping("/{personId}")
+    public Person getPerson(@PathVariable long personId) {
+        return personService.get(personId);
+    }
+
+    @DeleteMapping("/{personId}")
+    public void deletePerson(@PathVariable long personId) {
+        personService.delete(personId);
+    }
 }
