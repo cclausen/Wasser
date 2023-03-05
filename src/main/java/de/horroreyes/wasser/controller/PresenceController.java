@@ -45,6 +45,11 @@ public class PresenceController {
         presenceService.stopPresence(personId);
     }
 
+    @PostMapping("stopHere")
+    public void stopPresenceByUser(@RequestParam long personId, @RequestParam long placeId) {
+        presenceService.stopPresence(personId, placeId);
+    }
+
     @GetMapping("/{personId}")
     public List<Presence> allByPerson(@PathVariable long personId) {
         return presenceRepository.findAllByPersonId(personId);

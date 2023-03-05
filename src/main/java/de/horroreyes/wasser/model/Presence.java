@@ -8,6 +8,7 @@ import org.hibernate.Hibernate;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,16 +28,24 @@ public class Presence {
     @GeneratedValue
     private Long id;
     @ManyToOne
+    @JoinColumn(name = "person_id")
     @NonNull
     private Person person;
+    @ManyToOne
+    @JoinColumn(name = "place_id")
+    private Place place;
     @NonNull
     private LocalDateTime start;
     private LocalDateTime end;
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+            return false;
+        }
         Presence presence = (Presence) o;
 
         return Objects.equals(id, presence.id);

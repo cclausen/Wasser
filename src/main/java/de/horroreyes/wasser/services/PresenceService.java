@@ -50,7 +50,7 @@ public class PresenceService {
     public Presence getOpenPresence(long personId, long placeId) {
         Place place = placeRepository.getReferenceById(placeId);
         Person person = personRepository.getReferenceById(personId);
-        List<Presence> unstoppedPresences = presenceRepository.findByPersonAndEnd(person, null);
+        List<Presence> unstoppedPresences = presenceRepository.findByPersonAndPlaceAndEnd(person, place, null);
         if (unstoppedPresences.isEmpty()) {
             throw new NoOpenPresenceException("Cannot identify correct presence to stop");
         }

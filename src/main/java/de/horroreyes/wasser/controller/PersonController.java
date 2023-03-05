@@ -2,7 +2,6 @@ package de.horroreyes.wasser.controller;
 
 import java.util.List;
 
-import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,11 +22,9 @@ import jakarta.transaction.Transactional;
 @RequestMapping("api/persons")
 public class PersonController {
     private final PersonService personService;
-    private ConversionService conversionService;
 
-    public PersonController(PersonService personService, ConversionService conversionService) {
+    public PersonController(PersonService personService) {
         this.personService = personService;
-        this.conversionService = conversionService;
     }
 
     @GetMapping("/")
