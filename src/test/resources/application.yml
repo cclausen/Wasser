@@ -10,11 +10,22 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: 'create-drop'
+      show_sql: true
+      format_sql: true
+    properties:
+      hibernate:
+        globally_quoted_identifiers: true
+        enable_lazy_load_no_trans: true
+
     open-in-view: false
   liquibase:
     enabled: false
   devtools:
     add-properties: false
+
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
 management:
   endpoints:
     enabled-by-default: false

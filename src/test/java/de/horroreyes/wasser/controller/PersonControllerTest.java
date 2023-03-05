@@ -1,15 +1,22 @@
 package de.horroreyes.wasser.controller;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
+import de.horroreyes.wasser.model.Person;
+import de.horroreyes.wasser.model.enums.Status;
 import io.restassured.RestAssured;
+import static io.restassured.RestAssured.delete;
 import static io.restassured.RestAssured.get;
+import static io.restassured.RestAssured.with;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 
+@TestMethodOrder(MethodOrderer.MethodName.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class PersonControllerIntegrationTest {
     @LocalServerPort
@@ -23,18 +30,40 @@ class PersonControllerIntegrationTest {
 
     @Test
     void indexPersons() {
-        get("/").then().assertThat().statusCode(200).body("$.content", hasSize(5)).body("lotto.lottoId", equalTo(5));
+        get("/").then().assertThat()
+                .statusCode(200)
+                .body("$", hasSize(2));
     }
 
     @Test
     void create() {
+        with().contentType("application/json")
+                .body(new Person("Frodo", "Baggins", Status.ACTIVE))
+                .post("/").then().assertThat()
+                .statusCode(200);
+
+        delete("/3").then().assertThat()
+                .statusCode(200);
     }
 
     @Test
     void getPerson() {
+        get("/1").then().assertThat()
+                .statusCode(200)
+                .body("lastname", equalTo("Baggins"));
     }
 
     @Test
     void deletePerson() {
+        delete("/2").then().assertThat()
+                .statusCode(200);
+        get("/2").then().assertThat()
+                .statusCode(404);
+
+        // Assure valid state for other tests
+        with().contentType("application/json")
+                .body(new Person("Frodo", "Baggins", Status.ACTIVE))
+                .post("/").then().assertThat()
+                .statusCode(200);
     }
 }

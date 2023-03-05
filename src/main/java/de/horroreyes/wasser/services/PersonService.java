@@ -1,6 +1,7 @@
 package de.horroreyes.wasser.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -23,8 +24,8 @@ public class PersonService {
         return personRepository.save(newPerson);
     }
 
-    public Person get(long personId) {
-        return personRepository.getReferenceById(personId);
+    public Optional<Person> get(long personId) {
+        return personRepository.findById(personId);
     }
 
     public void delete(long personId) {
