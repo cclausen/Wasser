@@ -49,6 +49,3 @@ management:
       enabled: true
     defaults:
       enabled: true
-springdoc:
-  api-docs:
-    path: "/api-docs"
