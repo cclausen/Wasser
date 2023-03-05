@@ -1,4 +1,4 @@
-package de.horroreyes.wasser.controller;
+package de.horroreyes.wasser.it;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
