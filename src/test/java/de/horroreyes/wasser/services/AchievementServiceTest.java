@@ -47,11 +47,11 @@ class AchievementServiceTest {
     @Test
     void testGet() {
         // GIVEN
-        when(achievementRepository.getReferenceById(1L)).thenReturn(new Achievement());
+        when(achievementRepository.findById(1L)).thenReturn(Optional.of(new Achievement()));
         // WHEN
         Optional<Achievement> achievement = achievementService.get(1L);
         // THEN
-        verify(achievementRepository).getReferenceById(1L);
+        verify(achievementRepository).findById(1L);
         assertThat(achievement).isNotNull().isPresent();
     }
 
