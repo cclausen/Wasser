@@ -2,6 +2,7 @@ package de.horroreyes.wasser.services;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ public class PresenceService {
     }
 
     public void startPresence(long personId) {
-        Person person = personRepository.getReferenceById(personId);
+        Person person = personRepository.findById(personId).orElseThrow();
         List<Presence> unstoppedPresences = presenceRepository.findByPersonAndEnd(person, null);
         if (unstoppedPresences.isEmpty()) {
             presenceRepository.save(new Presence(person, LocalDateTime.now()));
@@ -36,7 +37,7 @@ public class PresenceService {
     }
 
     public void stopPresence(long presenceId) {
-        Presence presence = presenceRepository.getReferenceById(presenceId);
+        Presence presence = presenceRepository.findById(presenceId).orElseThrow();
         presence.setEnd(LocalDateTime.now());
         presenceRepository.save(presence);
     }
@@ -48,8 +49,8 @@ public class PresenceService {
     }
 
     public Presence getOpenPresence(long personId, long placeId) {
-        Place place = placeRepository.getReferenceById(placeId);
-        Person person = personRepository.getReferenceById(personId);
+        Place place = placeRepository.findById(placeId).orElseThrow();
+        Person person = personRepository.findById(personId).orElseThrow();
         List<Presence> unstoppedPresences = presenceRepository.findByPersonAndPlaceAndEnd(person, place, null);
         if (unstoppedPresences.isEmpty()) {
             throw new NoOpenPresenceException("Cannot identify correct presence to stop");
@@ -59,5 +60,25 @@ public class PresenceService {
             throw new MoreThanOneOpenPresenceException("Cannot identify correct presence to stop");
         }
         return unstoppedPresences.get(0);
+    }
+
+    public List<Presence> findAllByPersonId(long personId) {
+        return presenceRepository.findAllByPersonId(personId);
+    }
+
+    public Optional<Presence> findOpenPresenceByPersonId(long personId) {
+        return presenceRepository.findActivePresenceByStartIsNotNullAndEndIsNullAndPersonId(personId);
+    }
+
+    public List<Presence> getOpenPresences() {
+        return presenceRepository.findByEndIsNull();
+    }
+
+    public void stopPresenceByPersonId(long personId) {
+        Optional<Presence> presence = presenceRepository.findActivePresenceByStartIsNotNullAndEndIsNullAndPersonId(personId);
+        if (presence.isPresent()) {
+            presence.get().setEnd(LocalDateTime.now());
+            presenceRepository.save(presence.get());
+        }
     }
 }

@@ -2,6 +2,7 @@ package de.horroreyes.wasser.repositories;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -17,4 +18,8 @@ public interface PresenceRepository extends JpaRepository<Presence, Long> {
     List<Presence> findAllByPersonId(long personId);
 
     List<Presence> findByPersonAndPlaceAndEnd(Person person, Place place, LocalDateTime end);
+
+    Optional<Presence> findActivePresenceByStartIsNotNullAndEndIsNullAndPersonId(long personId);
+
+    List<Presence> findByEndIsNull();
 }
