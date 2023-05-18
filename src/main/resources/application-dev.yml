@@ -8,3 +8,12 @@ spring:
 wasser:
   jwtExpirationMs: 86400000
   jwtSecret: bezKoderSecretKey
+
+logging:
+  level:
+    org:
+      springframework:
+        http:
+          converter:
+            json:
+              Jackson2ObjectMapperBuilder: DEBUG

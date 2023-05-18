@@ -1,25 +1,20 @@
 package de.horroreyes.wasser.controller;
 
-import java.util.List;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
-
 import de.horroreyes.wasser.model.Person;
+import de.horroreyes.wasser.model.enums.Status;
 import de.horroreyes.wasser.services.PersonService;
 import jakarta.transaction.Transactional;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @RestController
 @Transactional
-@RequestMapping("api/persons")
+@RequestMapping(path = "api/persons", produces = MediaType.APPLICATION_JSON_VALUE)
 public class PersonController {
     private final PersonService personService;
 
@@ -37,6 +32,11 @@ public class PersonController {
         return personService.save(newPerson);
     }
 
+    @PutMapping("/{personId}")
+    public Person update(@PathVariable long personId, @Validated @RequestBody Person newPerson) {
+        return personService.update(personId, newPerson);
+    }
+
     @GetMapping("/{personId}")
     public Person getPerson(@PathVariable long personId) {
         return personService.get(personId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -45,5 +45,10 @@ public class PersonController {
     @DeleteMapping("/{personId}")
     public void deletePerson(@PathVariable long personId) {
         personService.delete(personId);
+    }
+
+    @GetMapping("/byStatus/{status}")
+    public List<Person> getPersonsByStatus(@PathVariable Status status) {
+        return personService.getByStatus(status);
     }
 }

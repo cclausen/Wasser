@@ -1,21 +1,13 @@
 package de.horroreyes.wasser.model;
 
-import java.time.LocalDateTime;
-import java.util.Objects;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import org.hibernate.Hibernate;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -26,16 +18,21 @@ import lombok.ToString;
 public class Presence {
     @Id
     @GeneratedValue
+    @NotNull
     private Long id;
     @ManyToOne
     @JoinColumn(name = "person_id")
     @NonNull
+    @NotNull
     private Person person;
     @ManyToOne
     @JoinColumn(name = "place_id")
     private Place place;
     @NonNull
+    @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime start;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime end;
 
     @Override

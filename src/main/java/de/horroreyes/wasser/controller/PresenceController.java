@@ -1,20 +1,15 @@
 package de.horroreyes.wasser.controller;
 
+import de.horroreyes.wasser.model.Presence;
+import de.horroreyes.wasser.services.PresenceService;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import de.horroreyes.wasser.model.Presence;
-import de.horroreyes.wasser.services.PresenceService;
-
 @RestController
-@RequestMapping("api/presences")
+@RequestMapping(path = "api/presences", produces = MediaType.APPLICATION_JSON_VALUE)
 public class PresenceController {
     private final PresenceService presenceService;
 

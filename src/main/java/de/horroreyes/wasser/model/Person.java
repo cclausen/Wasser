@@ -1,23 +1,15 @@
 package de.horroreyes.wasser.model;
 
-import java.time.LocalDate;
-import java.util.Objects;
-
-import org.hibernate.Hibernate;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import de.horroreyes.wasser.model.enums.Lifeguard;
 import de.horroreyes.wasser.model.enums.Status;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+import org.hibernate.Hibernate;
+
+import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -29,8 +21,10 @@ public class Person {
     @Id
     @GeneratedValue
     private Long id;
+    @NotNull
     @NonNull
     private String firstname;
+    @NotNull
     @NonNull
     private String lastname;
     @NonNull
@@ -38,7 +32,9 @@ public class Person {
     private Status status;
     @Enumerated(EnumType.STRING)
     private Lifeguard lifeguard;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate lifeguardFrom;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate fitness;
 
     @Override
