@@ -58,3 +58,25 @@ springdoc:
   api-docs:
     enabled: true
     path: /api-docs
+helferstunden:
+  prefillUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeAcGl1xh2IkL2kVRngjsB3wai2QS41ujU21Y6xIP7qg1xZnA/viewform?usp=pp_url"
+  postUrl: "https://docs.google.com/forms/u/0/d/e/1FAIpQLSeAcGl1xh2IkL2kVRngjsB3wai2QS41ujU21Y6xIP7qg1xZnA/formResponse"
+  datum: "entry.674470854"
+  bezirk: "entry.748625039"
+  einsatzgebiet: "entry.214743795"
+  badegaeste: "entry.1059332654"
+  stunden: "entry.882991967"
+  einsatzkraefte: "entry.622552089"
+  firstResponder: "entry.2112674698"
+  reanimationen: "entry.994519763"
+  aed: "entry.303805869"
+  hilfeleistungenPersonen: "entry.1362381493"
+  davonMedizinisch: "entry.1386754172"
+  davonLebensrettung: "entry.798599307"
+  davonWasserrettung: "entry.608094078"
+  davonLebensgefahrRetter: "entry.1538937569"
+  davonVerstorben: "entry.114875111"
+  davonErtrunken: "entry.1320673228"
+  hilfeSachwerte: "entry.67969483"
+  hilfeUmwelt: "entry.1510282127"
+  hilfeTiere: "entry.559565118"

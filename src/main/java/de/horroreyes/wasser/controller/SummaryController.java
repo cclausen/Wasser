@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.UnsupportedEncodingException;
+
 @RestController
 @RequestMapping(path = "api/summary", produces = MediaType.APPLICATION_JSON_VALUE)
 public class SummaryController {
@@ -19,5 +21,15 @@ public class SummaryController {
     @GetMapping("/summary")
     public Summary summary() {
         return summaryService.summary();
+    }
+
+    @GetMapping("/sendSummary")
+    public boolean sendSummary() {
+        return summaryService.sendSummary();
+    }
+
+    @GetMapping(value = "/fillSummary", produces = MediaType.TEXT_PLAIN_VALUE)
+    public String fillSummary() throws UnsupportedEncodingException {
+        return summaryService.fillSummary();
     }
 }
