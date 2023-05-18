@@ -47,10 +47,10 @@ public class SummaryService {
     }
 
     public boolean sendSummary() {
-        return form.sendTestForm();
+        return form.sendTestForm(summary());
     }
 
     public String fillSummary() throws UnsupportedEncodingException {
-        return form.openPrefilledForm();
+        return form.openPrefilledForm(summary());
     }
 }

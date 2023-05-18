@@ -1,33 +1,39 @@
 package de.horroreyes.wasser.model;
 
-import java.util.Objects;
-
-import org.hibernate.Hibernate;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+import org.hibernate.Hibernate;
+
+import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
 public class Place {
     @Id
     @GeneratedValue
     private Long id;
+    @NotNull
     @NonNull
     @Column(unique = true)
     private String name;
+    @NotNull
+    @NonNull
+    @NotBlank
+    private String district;
+    @NotNull
+    @NonNull
+    @NotBlank
+    private String officialName;
+
 
     @Override
     public boolean equals(Object o) {

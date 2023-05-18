@@ -1,10 +1,5 @@
 package de.horroreyes.wasser.config;
 
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import de.horroreyes.wasser.model.Person;
 import de.horroreyes.wasser.model.Place;
 import de.horroreyes.wasser.model.Role;
@@ -16,6 +11,10 @@ import de.horroreyes.wasser.repositories.PlaceRepository;
 import de.horroreyes.wasser.repositories.RoleRepository;
 import de.horroreyes.wasser.repositories.UserRepository;
 import lombok.extern.java.Log;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @Log
@@ -29,7 +28,7 @@ class Database {
 
         return args -> {
             if (placeRepository.count() == 0) {
-                log.info(PRELOADING + placeRepository.save(new Place("Bultensee")));
+                log.info(PRELOADING + placeRepository.save(new Place("Bultensee", "Bremen-Stadt", "Bultensee")));
             }
             if (roleRepository.count() == 0) {
                 log.info(PRELOADING + roleRepository.save(new Role(Roles.ROLE_ADMIN)));

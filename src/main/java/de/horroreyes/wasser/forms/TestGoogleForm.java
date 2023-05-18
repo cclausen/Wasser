@@ -1,5 +1,6 @@
 package de.horroreyes.wasser.forms;
 
+import de.horroreyes.wasser.model.Summary;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +27,7 @@ public class TestGoogleForm implements GoogleForm {
     private final String selection = "527384042";
 
     @Override
-    public boolean sendTestForm() {
+    public boolean sendTestForm(Summary summary) {
         try {
             URL url = new URL(formPostUrl);
 
@@ -58,7 +59,7 @@ public class TestGoogleForm implements GoogleForm {
     }
 
     @Override
-    public String openPrefilledForm() throws UnsupportedEncodingException {
+    public String openPrefilledForm(Summary summary) throws UnsupportedEncodingException {
         return prefillUrl + "?usp=pp_url&" + prepareParams();
     }
 

@@ -26,6 +26,20 @@ public class Day {
     private Place place;
     private LocalDateTime start;
     private LocalDateTime end;
+    private int amountOfVisitors;
+    private int firstResponder;
+    private int reanimations;
+    private int aed;
+    private int helpPersons;
+    private int wasMedical;
+    private int wasLifeThreatening;
+    private int wasInWater;
+    private int wasLifeThreateningForHelper;
+    private int wasDead;
+    private int wasDrowned;
+    private int helpThings;
+    private int helpEnvironment;
+    private int helpAnimals;
 
     @Override
     public boolean equals(Object o) {
@@ -40,4 +54,5 @@ public class Day {
     public int hashCode() {
         return 1056311305;
     }
+
 }

@@ -1,9 +1,11 @@
 package de.horroreyes.wasser.forms;
 
+import de.horroreyes.wasser.model.Summary;
+
 import java.io.UnsupportedEncodingException;
 
 public interface GoogleForm {
-    boolean sendTestForm();
+    boolean sendTestForm(Summary summary);
 
-    String openPrefilledForm() throws UnsupportedEncodingException;
+    String openPrefilledForm(Summary summary) throws UnsupportedEncodingException;
 }

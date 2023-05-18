@@ -1,5 +1,6 @@
 package de.horroreyes.wasser.forms;
 
+import de.horroreyes.wasser.model.Summary;
 import de.horroreyes.wasser.properties.HelferstundenProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -9,7 +10,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 
 @Slf4j
@@ -19,6 +23,7 @@ public class HelferstundenGoogleForm implements GoogleForm {
     private static final String MONTH = "_month";
     private static final String DAY = "_day";
     private static final String UTF_8 = StandardCharsets.UTF_8.name();
+    private final DecimalFormat germanDecimalFormat = new DecimalFormat("#,##0.00", new DecimalFormatSymbols(Locale.GERMAN));
 
     private final HelferstundenProperties properties;
 
@@ -27,12 +32,12 @@ public class HelferstundenGoogleForm implements GoogleForm {
     }
 
 
-    public boolean sendTestForm() {
+    public boolean sendTestForm(Summary summary) {
         try {
             URL url = new URL(properties.getPostUrl());
 
             //PREPARE PARAMS
-            StringBuilder postData = prepareParams();
+            StringBuilder postData = prepareParams(summary);
 
             //SEND POST
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -58,33 +63,33 @@ public class HelferstundenGoogleForm implements GoogleForm {
         return true;
     }
 
-    public String openPrefilledForm() throws UnsupportedEncodingException {
-        return properties.getPrefillUrl() + "&" + prepareParams();
+    public String openPrefilledForm(Summary summary) throws UnsupportedEncodingException {
+        return properties.getPrefillUrl() + "&" + prepareParams(summary);
     }
 
-    private StringBuilder prepareParams() throws UnsupportedEncodingException {
+    private StringBuilder prepareParams(Summary summary) throws UnsupportedEncodingException {
         Map<String, Object> params = new LinkedHashMap<>();
-        params.put(properties.getDatum() + YEAR, "1");
-        params.put(properties.getDatum() + MONTH, "1");
-        params.put(properties.getDatum() + DAY, "1");
-        params.put(properties.getBezirk(), "Bremen-Stadt"); // MIST
-        params.put(properties.getEinsatzgebiet(), "Bultensee"); // MIST
-        params.put(properties.getBadegaeste(), "1"); // MIST
-        params.put(properties.getStunden(), "2");
-        params.put(properties.getEinsatzkraefte(), "3");
-        params.put(properties.getFirstResponder(), "4");
-        params.put(properties.getReanimationen(), "5");
-        params.put(properties.getAed(), "6");
-        params.put(properties.getHilfeleistungenPersonen(), "7");
-        params.put(properties.getDavonMedizinisch(), "8");
-        params.put(properties.getDavonLebensrettung(), "9");
-        params.put(properties.getDavonWasserrettung(), "10");
-        params.put(properties.getDavonLebensgefahrRetter(), "11");
-        params.put(properties.getDavonVerstorben(), "12");
-        params.put(properties.getDavonErtrunken(), "13");
-        params.put(properties.getHilfeSachwerte(), "14");
-        params.put(properties.getHilfeUmwelt(), "15");
-        params.put(properties.getHilfeTiere(), "16");
+        params.put(properties.getDatum() + YEAR, summary.day().getStart().getYear());
+        params.put(properties.getDatum() + MONTH, summary.day().getStart().getMonthValue());
+        params.put(properties.getDatum() + DAY, summary.day().getStart().getDayOfMonth());
+        params.put(properties.getBezirk(), summary.place().getDistrict()); // Bremen-Stadt
+        params.put(properties.getEinsatzgebiet(), summary.place().getOfficialName()); // Bultensee
+        params.put(properties.getBadegaeste(), summary.day().getAmountOfVisitors()); // 0-5
+        params.put(properties.getStunden(), germanDecimalFormat.format(summary.totalHours()));
+        params.put(properties.getEinsatzkraefte(), summary.persons().size());
+        params.put(properties.getFirstResponder(), summary.day().getFirstResponder());
+        params.put(properties.getReanimationen(), summary.day().getReanimations());
+        params.put(properties.getAed(), summary.day().getAed());
+        params.put(properties.getHilfeleistungenPersonen(), summary.day().getHelpPersons());
+        params.put(properties.getDavonMedizinisch(), summary.day().getWasMedical());
+        params.put(properties.getDavonLebensrettung(), summary.day().getWasLifeThreatening());
+        params.put(properties.getDavonWasserrettung(), summary.day().getWasInWater());
+        params.put(properties.getDavonLebensgefahrRetter(), summary.day().getWasLifeThreateningForHelper());
+        params.put(properties.getDavonVerstorben(), summary.day().getWasDead());
+        params.put(properties.getDavonErtrunken(), summary.day().getWasDrowned());
+        params.put(properties.getHilfeSachwerte(), summary.day().getHelpThings());
+        params.put(properties.getHilfeUmwelt(), summary.day().getHelpEnvironment());
+        params.put(properties.getHilfeTiere(), summary.day().getHelpAnimals());
 
         StringBuilder postData = new StringBuilder();
         for (Map.Entry<String, Object> param : params.entrySet()) {
