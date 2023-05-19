@@ -69,27 +69,27 @@ public class HelferstundenGoogleForm implements GoogleForm {
 
     private StringBuilder prepareParams(Summary summary) throws UnsupportedEncodingException {
         Map<String, Object> params = new LinkedHashMap<>();
-        params.put(properties.getDatum() + YEAR, summary.day().getDate().getYear());
-        params.put(properties.getDatum() + MONTH, summary.day().getDate().getMonthValue());
-        params.put(properties.getDatum() + DAY, summary.day().getDate().getDayOfMonth());
+        params.put(properties.getDatum() + YEAR, summary.duty().getDate().getYear());
+        params.put(properties.getDatum() + MONTH, summary.duty().getDate().getMonthValue());
+        params.put(properties.getDatum() + DAY, summary.duty().getDate().getDayOfMonth());
         params.put(properties.getBezirk(), summary.place().getDistrict()); // Bremen-Stadt
         params.put(properties.getEinsatzgebiet(), summary.place().getOfficialName()); // Bultensee
-        params.put(properties.getBadegaeste(), summary.day().getAmountOfVisitors()); // 0-5
+        params.put(properties.getBadegaeste(), summary.duty().getAmountOfVisitors()); // 0-5
         params.put(properties.getStunden(), germanDecimalFormat.format(summary.totalHours()));
         params.put(properties.getEinsatzkraefte(), summary.persons().size());
-        params.put(properties.getFirstResponder(), summary.day().getFirstResponder());
-        params.put(properties.getReanimationen(), summary.day().getReanimations());
-        params.put(properties.getAed(), summary.day().getAed());
-        params.put(properties.getHilfeleistungenPersonen(), summary.day().getHelpPersons());
-        params.put(properties.getDavonMedizinisch(), summary.day().getWasMedical());
-        params.put(properties.getDavonLebensrettung(), summary.day().getWasLifeThreatening());
-        params.put(properties.getDavonWasserrettung(), summary.day().getWasInWater());
-        params.put(properties.getDavonLebensgefahrRetter(), summary.day().getWasLifeThreateningForHelper());
-        params.put(properties.getDavonVerstorben(), summary.day().getWasDead());
-        params.put(properties.getDavonErtrunken(), summary.day().getWasDrowned());
-        params.put(properties.getHilfeSachwerte(), summary.day().getHelpThings());
-        params.put(properties.getHilfeUmwelt(), summary.day().getHelpEnvironment());
-        params.put(properties.getHilfeTiere(), summary.day().getHelpAnimals());
+        params.put(properties.getFirstResponder(), summary.duty().getFirstResponder());
+        params.put(properties.getReanimationen(), summary.duty().getReanimations());
+        params.put(properties.getAed(), summary.duty().getAed());
+        params.put(properties.getHilfeleistungenPersonen(), summary.duty().getHelpPersons());
+        params.put(properties.getDavonMedizinisch(), summary.duty().getWasMedical());
+        params.put(properties.getDavonLebensrettung(), summary.duty().getWasLifeThreatening());
+        params.put(properties.getDavonWasserrettung(), summary.duty().getWasInWater());
+        params.put(properties.getDavonLebensgefahrRetter(), summary.duty().getWasLifeThreateningForHelper());
+        params.put(properties.getDavonVerstorben(), summary.duty().getWasDead());
+        params.put(properties.getDavonErtrunken(), summary.duty().getWasDrowned());
+        params.put(properties.getHilfeSachwerte(), summary.duty().getHelpThings());
+        params.put(properties.getHilfeUmwelt(), summary.duty().getHelpEnvironment());
+        params.put(properties.getHilfeTiere(), summary.duty().getHelpAnimals());
 
         StringBuilder postData = new StringBuilder();
         for (Map.Entry<String, Object> param : params.entrySet()) {

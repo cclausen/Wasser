@@ -12,7 +12,7 @@ public record Summary(
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
         LocalDateTime created,
         @NotNull
-        Day day,
+        Duty duty,
         @NotNull
         Set<Person> persons,
         @NotNull

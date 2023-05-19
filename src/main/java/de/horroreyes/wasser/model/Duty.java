@@ -19,7 +19,7 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Entity
-public class Day {
+public class Duty {
     @Id
     @GeneratedValue
     private Long id;
@@ -46,9 +46,9 @@ public class Day {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Day day = (Day) o;
+        Duty duty = (Duty) o;
 
-        return Objects.equals(id, day.id);
+        return Objects.equals(id, duty.id);
     }
 
     @Override

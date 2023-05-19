@@ -2,7 +2,7 @@ package de.horroreyes.wasser.services;
 
 import de.horroreyes.wasser.forms.GoogleForm;
 import de.horroreyes.wasser.forms.HelferstundenGoogleForm;
-import de.horroreyes.wasser.model.Day;
+import de.horroreyes.wasser.model.Duty;
 import de.horroreyes.wasser.model.Person;
 import de.horroreyes.wasser.model.Presence;
 import de.horroreyes.wasser.model.Summary;
@@ -27,8 +27,8 @@ public class SummaryService {
         this.form = form;
     }
 
-    public Summary summary(Day day) {
-        LocalDateTime dateTime = day.getDate().atTime(0, 0, 0);
+    public Summary summary(Duty duty) {
+        LocalDateTime dateTime = duty.getDate().atTime(0, 0, 0);
         List<Presence> presences = presenceRepository.findAllByStartAfterAndEndBeforeOrEndIsNull(
                 dateTime.withHour(0).withMinute(0).withSecond(0),
                 dateTime.withHour(0).withMinute(0).withSecond(0).plusDays(1)
@@ -42,14 +42,14 @@ public class SummaryService {
                 ).sum();
         Set<Person> persons = presences.stream().map(Presence::getPerson).collect(HashSet::new, HashSet::add, HashSet::addAll);
         long openPresence = presences.stream().filter(presence -> presence.getEnd() == null).count();
-        return new Summary(LocalDateTime.now(), day, persons, day.getPlace(), presences, total, (double) total / 60 / 60, openPresence);
+        return new Summary(LocalDateTime.now(), duty, persons, duty.getPlace(), presences, total, (double) total / 60 / 60, openPresence);
     }
 
-    public boolean sendSummary(Day day) {
-        return form.sendForm(summary(day));
+    public boolean sendSummary(Duty duty) {
+        return form.sendForm(summary(duty));
     }
 
-    public String fillSummary(Day day) throws UnsupportedEncodingException {
-        return form.openPrefilledForm(summary(day));
+    public String fillSummary(Duty duty) throws UnsupportedEncodingException {
+        return form.openPrefilledForm(summary(duty));
     }
 }
