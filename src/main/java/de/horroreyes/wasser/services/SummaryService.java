@@ -2,7 +2,10 @@ package de.horroreyes.wasser.services;
 
 import de.horroreyes.wasser.forms.GoogleForm;
 import de.horroreyes.wasser.forms.HelferstundenGoogleForm;
-import de.horroreyes.wasser.model.*;
+import de.horroreyes.wasser.model.Day;
+import de.horroreyes.wasser.model.Person;
+import de.horroreyes.wasser.model.Presence;
+import de.horroreyes.wasser.model.Summary;
 import de.horroreyes.wasser.repositories.PresenceRepository;
 import org.springframework.stereotype.Service;
 
@@ -24,15 +27,11 @@ public class SummaryService {
         this.form = form;
     }
 
-    public Summary summary() {
-        Place place = new Place();
-        place.setName("Bultensee");
-        Day day = new Day();
-        day.setPlace(place);
-
+    public Summary summary(Day day) {
+        LocalDateTime dateTime = day.getDate().atTime(0, 0, 0);
         List<Presence> presences = presenceRepository.findAllByStartAfterAndEndBeforeOrEndIsNull(
-                LocalDateTime.now().withHour(0).withMinute(0).withSecond(0),
-                LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).plusDays(1)
+                dateTime.withHour(0).withMinute(0).withSecond(0),
+                dateTime.withHour(0).withMinute(0).withSecond(0).plusDays(1)
         );
         long total = presences.stream()
                 .mapToLong(presence ->
@@ -43,14 +42,14 @@ public class SummaryService {
                 ).sum();
         Set<Person> persons = presences.stream().map(Presence::getPerson).collect(HashSet::new, HashSet::add, HashSet::addAll);
         long openPresence = presences.stream().filter(presence -> presence.getEnd() == null).count();
-        return new Summary(LocalDateTime.now(), day, persons, place, presences, total, (double) total / 60 / 60, openPresence);
+        return new Summary(LocalDateTime.now(), day, persons, day.getPlace(), presences, total, (double) total / 60 / 60, openPresence);
     }
 
-    public boolean sendSummary() {
-        return form.sendTestForm(summary());
+    public boolean sendSummary(Day day) {
+        return form.sendForm(summary(day));
     }
 
-    public String fillSummary() throws UnsupportedEncodingException {
-        return form.openPrefilledForm(summary());
+    public String fillSummary(Day day) throws UnsupportedEncodingException {
+        return form.openPrefilledForm(summary(day));
     }
 }

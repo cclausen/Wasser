@@ -27,7 +27,7 @@ public class TestGoogleForm implements GoogleForm {
     private final String selection = "527384042";
 
     @Override
-    public boolean sendTestForm(Summary summary) {
+    public boolean sendForm(Summary summary) {
         try {
             URL url = new URL(formPostUrl);
 

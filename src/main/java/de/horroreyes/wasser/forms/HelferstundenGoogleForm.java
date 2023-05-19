@@ -32,7 +32,7 @@ public class HelferstundenGoogleForm implements GoogleForm {
     }
 
 
-    public boolean sendTestForm(Summary summary) {
+    public boolean sendForm(Summary summary) {
         try {
             URL url = new URL(properties.getPostUrl());
 
@@ -69,9 +69,9 @@ public class HelferstundenGoogleForm implements GoogleForm {
 
     private StringBuilder prepareParams(Summary summary) throws UnsupportedEncodingException {
         Map<String, Object> params = new LinkedHashMap<>();
-        params.put(properties.getDatum() + YEAR, summary.day().getStart().getYear());
-        params.put(properties.getDatum() + MONTH, summary.day().getStart().getMonthValue());
-        params.put(properties.getDatum() + DAY, summary.day().getStart().getDayOfMonth());
+        params.put(properties.getDatum() + YEAR, summary.day().getDate().getYear());
+        params.put(properties.getDatum() + MONTH, summary.day().getDate().getMonthValue());
+        params.put(properties.getDatum() + DAY, summary.day().getDate().getDayOfMonth());
         params.put(properties.getBezirk(), summary.place().getDistrict()); // Bremen-Stadt
         params.put(properties.getEinsatzgebiet(), summary.place().getOfficialName()); // Bultensee
         params.put(properties.getBadegaeste(), summary.day().getAmountOfVisitors()); // 0-5

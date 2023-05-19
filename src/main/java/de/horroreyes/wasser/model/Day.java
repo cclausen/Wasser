@@ -1,5 +1,6 @@
 package de.horroreyes.wasser.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -10,7 +11,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Getter
@@ -24,8 +25,8 @@ public class Day {
     private Long id;
     @ManyToOne
     private Place place;
-    private LocalDateTime start;
-    private LocalDateTime end;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate date;
     private int amountOfVisitors;
     private int firstResponder;
     private int reanimations;
