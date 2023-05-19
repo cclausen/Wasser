@@ -30,10 +30,7 @@ public class SummaryService {
     public Summary summary(Duty duty) {
         LocalDateTime dateTime = duty.getDate().atTime(0, 0, 0);
 
-        List<Presence> presences = presenceRepository.findAllForThatPeriod(
-                dateTime,
-                dateTime.plusDays(1)
-        );
+        List<Presence> presences = presenceRepository.findAllForThatPeriod(dateTime, dateTime.plusDays(1));
         long total = presences.stream()
                 .mapToLong(presence ->
                         {

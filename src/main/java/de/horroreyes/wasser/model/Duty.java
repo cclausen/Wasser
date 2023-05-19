@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -25,6 +26,7 @@ public class Duty {
     private Long id;
     @ManyToOne
     private Place place;
+    @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
     private int amountOfVisitors;

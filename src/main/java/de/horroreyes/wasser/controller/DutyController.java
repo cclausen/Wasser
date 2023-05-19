@@ -1,7 +1,6 @@
 package de.horroreyes.wasser.controller;
 
 import de.horroreyes.wasser.model.Duty;
-import de.horroreyes.wasser.repositories.DutyRepository;
 import de.horroreyes.wasser.services.DutyService;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,12 +10,9 @@ import java.util.List;
 @RequestMapping(path = "api/duties", produces = "application/json")
 public class DutyController {
     private final DutyService dutyService;
-    private final DutyRepository dutyRepository;
 
-    public DutyController(DutyService dutyService,
-                          DutyRepository dutyRepository) {
+    public DutyController(DutyService dutyService) {
         this.dutyService = dutyService;
-        this.dutyRepository = dutyRepository;
     }
 
     @GetMapping("/")
@@ -36,8 +32,18 @@ public class DutyController {
 
     @PutMapping("/")
     public Duty updateDuty(@RequestBody Duty duty) {
-        Duty existing = dutyRepository.findById(duty.getId()).orElseThrow();
+        Duty existing = dutyService.getDuty(duty.getId());
         duty.setId(existing.getId());
         return this.dutyService.updateDuty(duty);
+    }
+
+    @PostMapping("/")
+    public Duty createDuty(@RequestBody Duty duty) {
+        return this.dutyService.saveDuty(duty);
+    }
+
+    @DeleteMapping("/{dutyId}")
+    public void deleteDuty(@PathVariable Long dutyId) {
+        this.dutyService.deleteById(dutyId);
     }
 }
