@@ -23,6 +23,6 @@ public interface PresenceRepository extends JpaRepository<Presence, Long> {
 
     List<Presence> findByEndIsNull();
 
-    @Query("SELECT e FROM Presence e WHERE e.start > :start AND (e.end < :end OR e.end IS NULL)")
-    List<Presence> findAllByStartAfterAndEndBeforeOrEndIsNull(LocalDateTime start, LocalDateTime end);
+    @Query("SELECT e FROM Presence e WHERE ((e.start > :beginn AND e.start < :end) OR (e.end > :beginn AND e.end < :end))")
+    List<Presence> findAllForThatPeriod(LocalDateTime beginn, LocalDateTime end);
 }

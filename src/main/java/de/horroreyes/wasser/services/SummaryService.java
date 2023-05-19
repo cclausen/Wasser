@@ -29,17 +29,25 @@ public class SummaryService {
 
     public Summary summary(Duty duty) {
         LocalDateTime dateTime = duty.getDate().atTime(0, 0, 0);
-        List<Presence> presences = presenceRepository.findAllByStartAfterAndEndBeforeOrEndIsNull(
-                dateTime.withHour(0).withMinute(0).withSecond(0),
-                dateTime.withHour(0).withMinute(0).withSecond(0).plusDays(1)
+
+        List<Presence> presences = presenceRepository.findAllForThatPeriod(
+                dateTime,
+                dateTime.plusDays(1)
         );
         long total = presences.stream()
                 .mapToLong(presence ->
-                        Duration.between(
-                                presence.getStart(),
-                                Objects.requireNonNullElse(presence.getEnd(), LocalDateTime.now())
-                        ).getSeconds()
+                        {
+                            LocalDateTime startTime = presence.getStart();
+                            LocalDateTime endTime = Objects.requireNonNullElse(presence.getEnd(), LocalDateTime.now());
+                            return Duration.between(
+                                    // Start, but only from this day
+                                    startTime.isAfter(dateTime) ? startTime : dateTime,
+                                    // End, but only until this day
+                                    endTime.isBefore(dateTime.plusDays(1)) ? endTime : dateTime.plusDays(1)
+                            ).getSeconds();
+                        }
                 ).sum();
+
         Set<Person> persons = presences.stream().map(Presence::getPerson).collect(HashSet::new, HashSet::add, HashSet::addAll);
         long openPresence = presences.stream().filter(presence -> presence.getEnd() == null).count();
         return new Summary(LocalDateTime.now(), duty, persons, duty.getPlace(), presences, total, (double) total / 60 / 60, openPresence);
