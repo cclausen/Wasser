@@ -28,6 +28,7 @@ public class Person {
     @NonNull
     private String lastname;
     @NonNull
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Status status;
     @Enumerated(EnumType.STRING)
