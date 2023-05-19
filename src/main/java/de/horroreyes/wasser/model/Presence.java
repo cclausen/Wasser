@@ -14,7 +14,7 @@ import java.util.Objects;
 @ToString
 @Entity
 @RequiredArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
 public class Presence {
     @Id
     @GeneratedValue
